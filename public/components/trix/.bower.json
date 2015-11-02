@@ -1,0 +1,14 @@
+{
+  "name": "trix",
+  "homepage": "https://github.com/basecamp/trix",
+  "version": "0.9.0",
+  "_release": "0.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.9.0",
+    "commit": "8dad233e008cf0f1612db4a6bb7e303dce396ada"
+  },
+  "_source": "git://github.com/basecamp/trix.git",
+  "_target": "0.9.0",
+  "_originalSource": "trix"
+}

@@ -1,0 +1,4 @@
+<summary><%= @title %> (<%= @renderCount %>)</summary>
+<div class="panel">
+  Syncs: <%= @syncCount %>
+</div>

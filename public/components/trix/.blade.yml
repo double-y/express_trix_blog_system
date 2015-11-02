@@ -1,0 +1,37 @@
+load_paths:
+  - test/src
+  - assets
+  - polyfills
+  - src
+
+logical_paths:
+  - trix.js
+  - test.js
+  - trix.css
+
+build:
+  logical_paths:
+    - trix.js
+    - trix-core.js
+    - trix.css
+  path: dist
+  js_compressor: uglifier
+
+plugins:
+  sauce_labs:
+    browsers:
+      Google Chrome:
+        os: Mac, Windows
+        version: -2
+      Firefox:
+        os: Mac, Windows
+        version: -2
+      Safari:
+        platform: Mac
+        version: -3
+      Internet Explorer:
+        version: -1
+      iPhone:
+        version: -1
+      Motorola Droid 4 Emulator:
+        version: -1
