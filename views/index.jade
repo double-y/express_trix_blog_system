@@ -4,3 +4,9 @@ block content
   .row
     h1= title
     p Welcome to #{title}
+    #message_box.trix-content
+    .trix-content
+    form#message_form(action="/")
+      input#message_form_message_input(type="hidden" name="message")
+      trix-editor.trix-content(input="message_form_message_input")
+      input#message_form_submit_input(type="submit" value="submit")
