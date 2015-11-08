@@ -3,11 +3,9 @@ extends layout
 block content
   .row
     h1= title
+    #editor
     p Welcome to #{title}
-    ul#article_ul
-    form#blog_form(action="/")
-      input#blog_form_blog_input(type="hidden" name="blog")
-      trix-editor#blog_editor(input="blog_form_blog_input")
-      input#blog_form_submit_input(type="submit" value="submit")
+    #article_list
+    form#blog_form
     #trix_parser(style="display:none")
       trix-editor#trix_parser(input="blog_form_blog_input")

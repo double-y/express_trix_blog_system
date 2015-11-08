@@ -19,6 +19,8 @@
     "babel-core": "^6.1.2",
     "babel-loader": "^6.0.1",
     "babel-preset-es2015": "^6.1.2",
+    "babel-preset-react": "^6.1.2",
+    "jsx-loader": "^0.13.2",
     "node-libs-browser": "^0.5.3",
     "webpack": "^1.12.3"
   }
