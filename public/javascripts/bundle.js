@@ -71,7 +71,7 @@
 	        });
 	        return React.createElement(
 	            'ul',
-	            null,
+	            { id: 'article_ul' },
 	            columns
 	        );
 	    }
@@ -105,11 +105,7 @@
 	            return React.createElement(
 	                'li',
 	                null,
-	                React.createElement(
-	                    'div',
-	                    { 'class': 'trix-content' },
-	                    articleHtml
-	                ),
+	                React.createElement('div', { 'class': 'trix-content', dangerouslySetInnerHTML: { __html: articleHtml } }),
 	                React.createElement('hr', null)
 	            );
 	        }

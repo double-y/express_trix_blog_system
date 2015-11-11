@@ -23,7 +23,7 @@ var BlogList = React.createClass({
         var columns = editorJsons.map(function(editorJson){
             return <BlogColumn trixjson={editorJson}/>
         });
-        return (<ul>{columns}</ul>);
+        return (<ul id="article_ul">{columns}</ul>);
     }
 });
 
@@ -43,7 +43,7 @@ var BlogColumn = React.createClass({
         if(this.state.isUpdateMode){
             return (<li onClick={this.handleClick}><div class='trix-content'>{articleHtml}</div><UpdateBlogBox/></li>);
         }else{
-            return (<li><div class='trix-content'>{articleHtml}</div><hr/></li>);
+            return (<li><div class='trix-content' dangerouslySetInnerHTML={{__html: articleHtml}}></div><hr/></li>);
         }
     }
 });

@@ -1,7 +1,7 @@
 {
-  "name": "express_trix_blog_system",
+  "name": "express_medium_blog_system",
   "version": "0.0.0",
-  "homepage": "https://github.com/double-y/express_trix_blog_system",
+  "homepage": "https://github.com/double-y/express_medium_blog_system",
   "authors": [
     "Yosuke Yasuda <double.y.919.quick@gmail.com>"
   ],
@@ -19,6 +19,6 @@
   ],
   "dependencies": {
     "trix": "0.9.0",
-    "bootstrap": "3.3.5",
+    "bootstrap": "3.3.5"
   }
 }
