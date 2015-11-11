@@ -1,8 +1,4 @@
 'use strict'
-new Medium({
-    element: document.getElementById('editor'),
-    mode: Medium.inlineMode,
-});
 
 var React = require('react');
 var ReactDOM = require('react-dom');
