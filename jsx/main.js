@@ -20,8 +20,8 @@ var BlogList = React.createClass({
     },
     render: function(){
         var editorJsons = this.fetchEditorJsons();
-        var columns = editorJsons.map(function(editorJson){
-            return <BlogColumn trixjson={editorJson}/>
+        var columns = editorJsons.map(function(editorJson, index){
+            return <BlogColumn trixjson={editorJson} blog_index={index}/>
         });
         return (<ul id="article_ul">{columns}</ul>);
     }
@@ -29,21 +29,41 @@ var BlogList = React.createClass({
 
 var BlogColumn = React.createClass({
     getInitialState: function() {
-        return {isUpdateMode: false};
+        return {
+            isUpdateMode: false,
+            trixJson: this.props.trixjson
+        };
     },
     parseTrixJsonToHtml: function(json){
         getTrixParser().editor.loadJSON(json)
         return getTrixParser().innerHTML;
     },
-    handleClick: function(event) {
-        this.setState({isUpdateMode: !this.state.isUpdateMode});
+    openUpdateBox: function(component, event) {
+        this.setState({isUpdateMode: true});
+    },
+    closeUpdateBox: function(component, event) {
+        this.setState({isUpdateMode: false});
+    },
+    updateBlog: function(trixjson){
+        var editorJsons = JSON.parse(localStorage["editorStorage"]);
+        editorJsons[this.props.blog_index] = trixjson;
+        localStorage["editorStorage"] = JSON.stringify(editorJsons);
+        this.setState({trixJson: trixjson});
     },
     render: function(){
-        var articleHtml = this.parseTrixJsonToHtml(this.props.trixjson);
+        var articleHtml = this.parseTrixJsonToHtml(this.state.trixJson);
         if(this.state.isUpdateMode){
-            return (<li onClick={this.handleClick}><div class='trix-content'>{articleHtml}</div><UpdateBlogBox/></li>);
+            return (
+                <li>
+                    <div class='trix-content' dangerouslySetInnerHTML={{__html: articleHtml}}></div>
+                    <UpdateBlogBox
+                        closeUpdateBox={this.closeUpdateBox}
+                        trixjson={this.state.trixJson}
+                        updateBlog={this.updateBlog}
+                    />
+                </li>);
         }else{
-            return (<li><div class='trix-content' dangerouslySetInnerHTML={{__html: articleHtml}}></div><hr/></li>);
+            return (<li onClick={this.openUpdateBox.bind(null, this)}><div class='trix-content' dangerouslySetInnerHTML={{__html: articleHtml}}></div><hr/></li>);
         }
     }
 });
@@ -51,7 +71,6 @@ var BlogColumn = React.createClass({
 var AddBlogBox = React.createClass({
     addBlog: function(event){
         event.preventDefault();
-        console.log("clicked");
         var trixeditor = document.querySelector('trix-editor#add_blog_editor').editor;
         var editorStorage = JSON.parse(localStorage["editorStorage"]);
         editorStorage.push(trixeditor);
@@ -72,23 +91,35 @@ var AddBlogBox = React.createClass({
 });
 
 var UpdateBlogBox = React.createClass({
+    getInitialState: function() {
+        return {
+            isUpdateMode: false,
+            trixJson: this.props.trixjson
+        };
+    },
     updateBlog: function(event){
         event.preventDefault();
-        console.log("clicked");
-        var trixeditor = document.querySelector('trix-editor#add_blog_editor').editor;
-        var editorStorage = JSON.parse(localStorage["editorStorage"]);
-        editorStorage.push(trixeditor);
-        localStorage["editorStorage"] = JSON.stringify(editorStorage);
-        ReactDOM.render(
-            <BlogList/>,
-            document.getElementById('article_list')
-        );
+        var editorJson = JSON.parse(JSON.stringify(this._editor));
+        this.props.updateBlog(editorJson);
+        this.setState({trixJson: editorJson});
+    },
+    closeBox: function(event){
+        this.props.closeUpdateBox();
+    },
+    setTrixEditor: function(dom){
+        if(dom){
+            dom.editor.loadJSON(this.state.trixJson);
+            this._editor = dom.editor;
+        }
     },
     render: function(){
         return (
             <div>
-                <trix-editor id='update_blog_editor'></trix-editor>
-                <a onClick={this.updateBlog}>update</a>
+                <a onClick={this.closeBox}>close</a>
+                <div>
+                    <trix-editor id='update_blog_editor' ref={(dom) => this.setTrixEditor(dom)}></trix-editor>
+                    <a onClick={this.updateBlog}>update</a>
+                </div>
             </div>
         )
     }
